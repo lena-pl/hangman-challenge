@@ -1,52 +1,114 @@
 word_to_guess = File.readlines('words.txt').map { |word| word.strip }.sample
 
-# letters = word_to_guess.chars
-#  cryptic_word = letters.map do |letter| 
-# 	"_ "
-# end
-
-
 letters_successfully_guessed = []
 
 lives = 7;
 
+art = [
+  <<-ART ,
+/----
+|   |
+|
+|
+|
+|
+--------
+  ART
+  <<-ART ,
+/----
+|   |
+|   O
+|
+|
+|
+--------
+  ART
+  <<-ART ,
+/----
+|   |
+|   O
+|   |
+|
+|
+--------
+  ART
+  <<-ART ,
+/----
+|   |
+|   O
+|  /|
+|
+|
+--------
+  ART
+  <<-ART ,
+/----
+|   |
+|   O
+|  /|\\
+|
+|
+--------
+  ART
+  <<-ART ,
+/----
+|   |
+|   O
+|  /|\\
+|  /
+|
+--------
+  ART
+  <<-ART ,
+/----
+|   |
+|   O
+|  /|\\
+|  / \\
+|
+--------
+  ART
+]
+
 loop do
+	#Case for LOSING
+	if lives <= 0
+	  puts "You lose!"
+	  puts "The answer was " + "'" + word_to_guess + "'"
+	  break
+	end
+	#Checking if guessed letter is contained in array of original word's characters
 	cryptic_word = word_to_guess.chars.map do |character|
 		if letters_successfully_guessed.include? character
 	    character
-
-		elsif lives <= 0
-			puts "You lose!".
-		break
-
 		else
 			"_" 
 		end
 
 	end.join(" ")
-	puts "You have #{lives} lives left."
+
+	#Case for WINNING
+	if !cryptic_word.include?("_")
+		puts "The answer is " + "'" + word_to_guess + "'" + "!"
+		puts "You win!"
+		break
+	end
+
+	#Handling lives/art
+	# puts "You have #{lives} lives left."
+	puts art[7 - lives]
+
 	puts "This is your word:"
 	puts cryptic_word
 
 	puts "Guess a letter"
 	guess = gets.strip
 
-	# if word_to_guess.include? guess
-	# 	lives -= 1
-	# 	letters_successfully_guessed << guess
-	#  else
-	#  	puts "Guess again!"
-	#  	lives_remaining -= 1
-	# end
-
 	if word_to_guess.include? guess
 		puts "You guessed right!"
 		letters_successfully_guessed << guess
-	unless cryptic_word.include?("_")
-		puts "You're done!"
-		end
-	 else
-	 	puts "Guess again!"
+	else
+	 	puts "Wrong!"
 	 	lives -= 1
 	end
 end
