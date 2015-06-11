@@ -72,7 +72,8 @@ art = [
 
 loop do
 	#Case for LOSING
-	if lives <= 0
+	if lives <= 1
+	  puts art[6]
 	  puts "You lose!"
 	  puts "The answer was " + "'" + word_to_guess + "'"
 	  break
